@@ -1,17 +1,13 @@
 require './photo.rb'
 
 class Parser
-  attr_accessor :file, :number_of_photos, :photos
+  attr_accessor :file, :photos
 
   def initialize(filename)
-    first = true
     @file = File.open(filename, 'r')
     @photos = []
     @file.each do |line|
-      if first
-        @number_of_photos = line
-        first = false
-      end
+      next if line.split.length < 2
       @photos << Photo.new(line)
     end
   end
