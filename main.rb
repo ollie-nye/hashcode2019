@@ -28,7 +28,7 @@ def optimal_photo(*photos)
       next
     end
   end
-  return [Slide.new(starting_photo), photos[1..].delete_at(chosen_slide_index)] unless chosen_slide
+  return [Slide.new(starting_photo), photos[1..].reject { |slide| slide == chosen_slide }] unless chosen_slide
   return [chosen_slide, ( photos.reject { |photo| chosen_slide.photos.map(&:id).include? photo.id } )]
 end
 
