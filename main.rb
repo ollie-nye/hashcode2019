@@ -9,4 +9,18 @@ photos = Parser.new('a_example.txt').photos
 # puts photos.first.tags_different_from(photos[1])
 # pp photos
 
-pp Slide.new(photos[2], photos[1])
+slides = []
+
+photos.each do |photo|
+  slides << Slide.new(photo) if photo.orientation == 'H'
+end
+
+v_photos = photos.select { |p| p.orientation == 'V' }
+
+v_photos.each_with_index do |photo, index|
+  next if index.odd?
+
+  slides << Slide.new(photo, v_photos[index + 1])
+end
+
+pp slides
