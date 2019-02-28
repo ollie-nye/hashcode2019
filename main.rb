@@ -15,22 +15,17 @@ photos = Parser.new('a_example.txt').photos
 #   slides << Slide.new(photo) if photo.orientation == 'H'
 # end
 
-# v_photos = photos.select { |p| p.orientation == 'V' }
+v_photos = photos.select { |p| p.orientation == 'V' }
 
-# v_photos.each_with_index do |photo, index|
-#   next if index.odd?
+def optimal_photo(photos)
+  starting_photo = photos.first
+  best_score = 0
+  chosen_slide = nil
+  photos[1..].each do |current_photo|
+    current_slide = Slide.new([starting_photo, current_photo])
+    chosen_slide = current_slide if current_slide.score > best_score?
+  end
+  return chosen_slide
+end
 
-#   slides << Slide.new(photo, v_photos[index + 1])
-# end
-
-# pp slides
-pp photos
-s = Slide.new(photos[0], photos[3])
-sa = Slide.new(photos[3])
-puts 's'
-pp s
-
-puts 'sa'
-pp sa
-
-pp s.score sa
+pp optimal_photo(v_photos)
