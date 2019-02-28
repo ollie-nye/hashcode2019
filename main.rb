@@ -25,7 +25,7 @@ photos = Parser.new('a_example.txt').photos
 
 # pp slides
 pp photos
-s = Slide.new(photos[1], photos[2])
+s = Slide.new(photos[0], photos[3])
 sa = Slide.new(photos[3])
 puts 's'
 pp s
