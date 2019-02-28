@@ -31,4 +31,8 @@ class Slide
   def score(slide)
     [tags_shared_with(slide), tags_different_from(slide)].min
   end
+
+  def print
+    @photos.each.map(&:id).join(' ')
+  end
 end
