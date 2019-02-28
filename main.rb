@@ -25,4 +25,8 @@ photos = Parser.new('a_example.txt').photos
 
 # pp slides
 pp photos
-puts Slide.new([photos.first, photos.last]).score
+s = Slide.new(photos[1], photos[2])
+sa = Slide.new(photos[0])
+pp s
+
+pp s.score sa
