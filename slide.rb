@@ -9,6 +9,7 @@ class Slide
 
     if in_photos.length > 1
       raise 'not matching orientation' unless in_photos[0].compatible_with(in_photos[1])
+      raise 'not allowed orientation' unless in_photos[0].orientation == 'V'
     end
 
     @photos = in_photos
