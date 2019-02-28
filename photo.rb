@@ -8,19 +8,8 @@ class Photo
     @id = index
   end
 
-  def tags_shared_with(photo)
-    (self.tags & photo.tags).size
-  end
-
-  def tags_different_from(photo)
-    [(self.tags - photo.tags).size, (photo.tags - self.tags).size].min
-  end
-
   def compatible_with(photo)
     self.orientation == photo.orientation
   end
 
-  def score(photo)
-    [tags_shared_with(photo), tags_different_from(photo)].min
-  end
 end
