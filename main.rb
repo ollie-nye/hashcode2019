@@ -4,56 +4,35 @@ require_relative './slide'
 require_relative './tag_directory'
 
 photos = Parser.new('c_memorable_moments.txt').photos
-# print photos.first.inspect
-# print photos[1].inspect
-# puts photos.first.tags_shared_with(photos[1])
-# puts photos.first.tags_different_from(photos[1])
-# pp photos
-
-# slides = []
-
-# photos.each do |photo|
-#   slides << Slide.new(photo) if photo.orientation == 'H'
-# end
-
-# v_photos = photos.select { |p| p.orientation == 'V' }
-
-# v_photos.each_with_index do |photo, index|
-#   next if index.odd?
-
-#   slides << Slide.new(photo, v_photos[index + 1])
-# end
-
-# pp slides
-
-tag_dir = TagDirectory.new
-
-photos.each do |photo|
-  tag_dir.add_slide(photo)
-end
-
-
-
-# pp photos
-# s = Slide.new(photos[1], photos[2])
-# sa = Slide.new(photos[3])
-# puts 's'
-# pp s
-
-# puts 'sa'
-# pp sa
-
 v_photos = photos.select { |p| p.orientation == 'V' }
 
-def optimal_photo(photos)
+def optimal_photo(*photos)
   starting_photo = photos.first
-  best_score = 0
   chosen_slide = nil
   photos[1..].each do |current_photo|
     current_slide = Slide.new(starting_photo, current_photo)
-    chosen_slide = current_slide if current_slide.score > best_score?
+    puts "#{current_slide.photos.map(&:id)} #{current_slide.self_score}"
+    if current_slide.self_score == 0
+      chosen_slide = current_slide 
+      puts "breaking"
+      break
+    elsif defined?(best_score) && current_slide.self_score < best_score
+      chosen_slide = current_slide 
+      best_score = current_slide.self_score
+      next
+    end
   end
-  return chosen_slide
+  return [Slide.new(starting_photo), photos[1..].reject { |slide| slide == chosen_slide }] unless chosen_slide
+  return [chosen_slide, ( photos[1..].reject { |slide| slide == chosen_slide } )]
 end
 
-pp optimal_photo(v_photos)
+def recurse_optimal_photo(slideshow = [], photos = [])
+  return slideshow if photos.nil? || photos.empty?
+  pp "slideshow/photos #{slideshow.count} #{photos.count}"
+  slides = slideshow
+  chosen_slide, remaining_photos = optimal_photo(*photos)
+  pp chosen_slide
+  slides << chosen_slide
+  recurse_optimal_photo(slides, remaining_photos)
+end
+pp recurse_optimal_photo([], v_photos).map { |slide| slide.photos.map(&:id)}

@@ -28,6 +28,10 @@ class Slide
     [(self.tags - slide.tags).size, (slide.tags - self.tags).size].min
   end
 
+  def self_score
+    photos.first.score(photos.last)
+  end
+
   def score(slide)
     [tags_shared_with(slide), tags_different_from(slide)].min
   end

@@ -12,4 +12,15 @@ class Photo
     self.orientation == photo.orientation
   end
 
+  def tags_shared_with(photo)
+    (self.tags & photo.tags).size
+  end
+
+  def tags_different_from(photo)
+    [(self.tags - photo.tags).size, (photo.tags - self.tags).size].min
+  end
+
+  def score(photo)
+    tags_shared_with(photo)
+  end
 end
