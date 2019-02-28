@@ -3,7 +3,7 @@ require_relative './photo'
 require_relative './slide'
 require_relative './tag_directory'
 
-photos = Parser.new('a_example.txt').photos
+photos = Parser.new('c_memorable_moments.txt').photos
 # print photos.first.inspect
 # print photos[1].inspect
 # puts photos.first.tags_shared_with(photos[1])
@@ -32,19 +32,7 @@ photos.each do |photo|
   tag_dir.add_slide(photo)
 end
 
-puts 'tags'
-pp tag_dir.tags
 
-puts 'slides'
-pp tag_dir.slides
-
-tag_dir.remove_slide(photos.first)
-
-puts 'tags'
-pp tag_dir.tags
-
-puts 'slides'
-pp tag_dir.slides
 
 # pp photos
 # s = Slide.new(photos[1], photos[2])
