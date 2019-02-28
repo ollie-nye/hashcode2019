@@ -4,15 +4,18 @@ class Slide
   def initialize(*in_photos)
     raise 'too many photos' if in_photos.length > 2
 
+    @tags = []
+    @photos = []
+
     if in_photos.length > 1
       raise 'not matching orientation' unless in_photos[0].compatible_with(in_photos[1])
     end
 
-    @photos << in_photos
+    @photos = in_photos
     @photos.each do |photo|
       @tags << photo.tags
     end
 
-    @tags = @tags.uniq
+    @tags = @tags.flatten.uniq
   end
 end
