@@ -2,8 +2,11 @@ require_relative './parser'
 require_relative './photo'
 require_relative './slide'
 require_relative './tag_directory'
+require_relative './slideshow'
 
-photos = Parser.new('c_memorable_moments.txt').photos
+photos = Parser.new('a_example.txt').photos
+# photos = Parser.new('c_memorable_moments.txt').photos
+
 v_photos = photos.select { |p| p.orientation == 'V' }
 
 def optimal_photo(*photos)
@@ -35,3 +38,47 @@ def recurse_optimal_photo(slideshow = [], photos = [])
   recurse_optimal_photo(slides, remaining_photos)
 end
 pp recurse_optimal_photo([], v_photos).map { |slide| slide.photos.map(&:id)}
+photos = Parser.new('a_example.txt').photos
+
+
+
+
+tag_dir = TagDirectory.new
+
+photos.each do |photo|
+  tag_dir.add_slide(photo)
+end
+
+
+
+# pp photos
+# s = Slide.new(photos[1], photos[2])
+# puts "s print #{s.print}"
+# sa = Slide.new(photos[3])
+# puts 's'
+# pp s
+
+slides = [
+  Slide.new(photos[0]),
+  Slide.new(photos[1], photos[2]),
+  Slide.new(photos[3])
+]
+Slideshow.new(slides).output
+
+# puts 'sa'
+# pp sa
+
+# v_photos = photos.select { |p| p.orientation == 'V' }
+
+# def optimal_photo(photos)
+#   starting_photo = photos.first
+#   best_score = 0
+#   chosen_slide = nil
+#   photos[1..].each do |current_photo|
+#     current_slide = Slide.new(starting_photo, current_photo)
+#     chosen_slide = current_slide if current_slide.score > best_score?
+#   end
+#   return chosen_slide
+# end
+
+# pp optimal_photo(v_photos)
