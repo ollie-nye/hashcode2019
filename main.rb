@@ -1,6 +1,7 @@
 require_relative './parser'
 require_relative './photo'
 require_relative './slide'
+require_relative './tag_directory'
 
 photos = Parser.new('a_example.txt').photos
 # print photos.first.inspect
@@ -15,7 +16,6 @@ photos = Parser.new('a_example.txt').photos
 #   slides << Slide.new(photo) if photo.orientation == 'H'
 # end
 
-<<<<<<< HEAD
 # v_photos = photos.select { |p| p.orientation == 'V' }
 
 # v_photos.each_with_index do |photo, index|
@@ -26,28 +26,35 @@ photos = Parser.new('a_example.txt').photos
 
 # pp slides
 
-tags = {}
+tag_dir = TagDirectory.new
+
 photos.each do |photo|
-  photo.tags.each do |tag|
-    tags[tag] = [] if tags[tag].nil?
-    tags[tag] << photo
-  end
+  tag_dir.add_slide(photo)
 end
 
 puts 'tags'
-pp tags
+pp tag_dir.tags
 
-pp photos
-s = Slide.new(photos[1], photos[2])
-sa = Slide.new(photos[3])
-puts 's'
-pp s
+puts 'slides'
+pp tag_dir.slides
 
-puts 'sa'
-pp sa
+tag_dir.remove_slide(photos.first)
 
-pp s.score sa
-=======
+puts 'tags'
+pp tag_dir.tags
+
+puts 'slides'
+pp tag_dir.slides
+
+# pp photos
+# s = Slide.new(photos[1], photos[2])
+# sa = Slide.new(photos[3])
+# puts 's'
+# pp s
+
+# puts 'sa'
+# pp sa
+
 v_photos = photos.select { |p| p.orientation == 'V' }
 
 def optimal_photo(photos)
@@ -62,4 +69,3 @@ def optimal_photo(photos)
 end
 
 pp optimal_photo(v_photos)
->>>>>>> fix it please
