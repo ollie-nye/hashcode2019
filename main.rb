@@ -55,7 +55,7 @@ def optimal_photo(photos)
   best_score = 0
   chosen_slide = nil
   photos[1..].each do |current_photo|
-    current_slide = Slide.new([starting_photo, current_photo])
+    current_slide = Slide.new(starting_photo, current_photo)
     chosen_slide = current_slide if current_slide.score > best_score?
   end
   return chosen_slide
