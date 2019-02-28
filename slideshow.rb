@@ -15,16 +15,18 @@ class Slideshow
     next_slide = find_next_slide(start, available_slides)
     @slides << next_slide
     @slide_count += 1
+    puts "#{available_slides.count} remaining"
     order(next_slide, available_slides.reject { |s| s == next_slide }) unless available_slides.count < 2
   end
 
   def find_next_slide(slide, available_slides)
     best_score = 0
     best_slide = nil
-    available_slides.each do |check_slide|
+    available_slides[0..10].each do |check_slide|
       score = slide.score check_slide
       best_slide = check_slide if score > best_score
     end
+    best_slide = available_slides.first if best_slide == nil
     best_slide
   end
 
