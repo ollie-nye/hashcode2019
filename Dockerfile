@@ -3,4 +3,4 @@ WORKDIR /app
 COPY Gemfile .
 COPY Gemfile.lock .
 RUN bundle install
-CMD ["rspec"]
+CMD ["ruby"]
