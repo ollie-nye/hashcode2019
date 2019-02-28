@@ -24,8 +24,20 @@ photos = Parser.new('a_example.txt').photos
 # end
 
 # pp slides
+
+tags = {}
+photos.each do |photo|
+  photo.tags.each do |tag|
+    tags[tag] = [] if tags[tag].nil?
+    tags[tag] << photo
+  end
+end
+
+puts 'tags'
+pp tags
+
 pp photos
-s = Slide.new(photos[0], photos[3])
+s = Slide.new(photos[1], photos[2])
 sa = Slide.new(photos[3])
 puts 's'
 pp s
