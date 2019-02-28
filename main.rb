@@ -4,8 +4,8 @@ require_relative './slide'
 require_relative './tag_directory'
 require_relative './slideshow'
 
-photos = Parser.new('a_example.txt').photos
-# photos = Parser.new('c_memorable_moments.txt').photos
+# photos = Parser.new('a_example.txt').photos
+photos = Parser.new('c_memorable_moments.txt').photos
 
 v_photos = photos.select { |p| p.orientation == 'V' }
 
