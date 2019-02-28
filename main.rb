@@ -6,6 +6,7 @@ require_relative './slideshow'
 
 # photos = Parser.new('a_example.txt').photos
 photos = Parser.new('c_memorable_moments.txt').photos
+slides = []
 
 v_photos = photos.select { |p| p.orientation == 'V' }
 
@@ -38,16 +39,21 @@ def recurse_optimal_photo(slideshow = [], photos = [])
   recurse_optimal_photo(slides, remaining_photos)
 end
 pp recurse_optimal_photo([], v_photos).map { |slide| slide.photos.map(&:id)}
-photos = Parser.new('a_example.txt').photos
+# photos = Parser.new('a_example.txt').photos
 
-
-
-
-tag_dir = TagDirectory.new
+slides << recurse_optimal_photo([], v_photos)
 
 photos.each do |photo|
-  tag_dir.add_slide(photo)
+  slides << Slide.new(photo) if photo.orientation == 'H'
 end
+
+slides = slides.flatten
+
+# tag_dir = TagDirectory.new
+
+# photos.each do |photo|
+#   tag_dir.add_slide(photo)
+# end
 
 
 
@@ -58,11 +64,6 @@ end
 # puts 's'
 # pp s
 
-slides = [
-  Slide.new(photos[0]),
-  Slide.new(photos[1], photos[2]),
-  Slide.new(photos[3])
-]
 Slideshow.new(slides).output
 
 # puts 'sa'
