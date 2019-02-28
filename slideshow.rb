@@ -13,6 +13,7 @@ class Slideshow
     file = File.open('out.txt', 'w')
     file.puts @slide_count
     @slides.each do |slide|
-      slide.print
+      file.puts slide.print
+    end
   end
 end
