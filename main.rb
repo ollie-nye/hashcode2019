@@ -14,7 +14,6 @@ def optimal_photo(*photos)
     puts "#{current_slide.photos.map(&:id)} #{current_slide.self_score}"
     if current_slide.self_score == 0
       chosen_slide = current_slide 
-      puts "breaking"
       break
     elsif defined?(best_score) && current_slide.self_score < best_score
       chosen_slide = current_slide 
@@ -23,7 +22,7 @@ def optimal_photo(*photos)
     end
   end
   return [Slide.new(starting_photo), photos[1..].reject { |slide| slide == chosen_slide }] unless chosen_slide
-  return [chosen_slide, ( photos[1..].reject { |slide| slide == chosen_slide } )]
+  return [chosen_slide, ( photos.reject { |photo| chosen_slide.photos.map(&:id).include? photo.id } )]
 end
 
 def recurse_optimal_photo(slideshow = [], photos = [])
