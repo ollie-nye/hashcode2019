@@ -1,10 +1,11 @@
 class Photo
-  attr_reader :tags, :orientation
+  attr_reader :tags, :orientation, :id
 
-  def initialize(input)
+  def initialize(input, index)
     values = input.split
     @orientation = values[0]
     @tags = values[2..]
+    @id = index
   end
 
   def tags_shared_with(photo)

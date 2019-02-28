@@ -6,9 +6,9 @@ class Parser
   def initialize(filename)
     @file = File.open(filename, 'r')
     @photos = []
-    @file.each do |line|
+    @file.each_with_index do |line, index|
       next if line.split.length < 2
-      @photos << Photo.new(line)
+      @photos << Photo.new(line, index - 1)
     end
   end
 end
